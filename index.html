@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Branch Expense Dashboard — Access Bank</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">AB</div>
+      <div class="logo-text">
+        <span class="logo-title">Access Bank</span>
+        <span class="logo-sub">Expense Intelligence</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="overview">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-section="categories">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        By Category
+      </a>
+      <a href="#" class="nav-item" data-section="transactions">
+        <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Transactions
+      </a>
+      <a href="#" class="nav-item" data-section="budget">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Budget Tracker
+      </a>
+    </nav>
+
+    <div class="sidebar-branch">
+      <div class="branch-label">Active Branch</div>
+      <select class="branch-select" id="branchSelect">
+        <option value="sango">Sango-Ota Branch</option>
+        <option value="ota">Ota Main Branch</option>
+        <option value="abeokuta">Abeokuta Branch</option>
+        <option value="ifo">Ifo Branch</option>
+      </select>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar">SI</div>
+      <div class="user-info">
+        <span class="user-name">Sanmi Israel</span>
+        <span class="user-role">Head of Operations</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">Overview</h1>
+        <span class="page-period" id="pagePeriod">June 2026</span>
+      </div>
+      <div class="topbar-right">
+        <div class="filter-group">
+          <label for="monthFilter">Period</label>
+          <select id="monthFilter" class="filter-select">
+            <option value="6">June 2026</option>
+            <option value="5">May 2026</option>
+            <option value="4">April 2026</option>
+            <option value="3">March 2026</option>
+          </select>
+        </div>
+        <button class="export-btn" id="exportBtn">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+      </div>
+    </header>
+
+    <!-- SECTIONS -->
+
+    <!-- ── OVERVIEW ── -->
+    <section class="section active" id="section-overview">
+
+      <!-- KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-total">
+          <div class="kpi-icon">₦</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Total Spent</span>
+            <span class="kpi-value" id="kpiTotal">₦0</span>
+            <span class="kpi-delta negative" id="kpiTotalDelta">+12% vs last month</span>
+          </div>
+        </div>
+        <div class="kpi-card kpi-budget">
+          <div class="kpi-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Monthly Budget</span>
+            <span class="kpi-value" id="kpiBudget">₦0</span>
+            <span class="kpi-delta" id="kpiBudgetDelta">0% utilised</span>
+          </div>
+        </div>
+        <div class="kpi-card kpi-remaining">
+          <div class="kpi-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Remaining Budget</span>
+            <span class="kpi-value" id="kpiRemaining">₦0</span>
+            <span class="kpi-delta" id="kpiRemainingDelta">days left in month</span>
+          </div>
+        </div>
+        <div class="kpi-card kpi-txns">
+          <div class="kpi-icon">
+            <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Transactions</span>
+            <span class="kpi-value" id="kpiTxns">0</span>
+            <span class="kpi-delta" id="kpiTxnsDelta">this month</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW 1 -->
+      <div class="charts-row">
+        <div class="chart-card chart-large">
+          <div class="chart-header">
+            <span class="chart-title">Monthly Spend Trend</span>
+            <span class="chart-sub">Last 6 months · All categories</span>
+          </div>
+          <canvas id="trendChart" height="200"></canvas>
+        </div>
+        <div class="chart-card chart-small">
+          <div class="chart-header">
+            <span class="chart-title">Spend by Category</span>
+            <span class="chart-sub">Current month breakdown</span>
+          </div>
+          <canvas id="donutChart" height="200"></canvas>
+          <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW 2 -->
+      <div class="charts-row">
+        <div class="chart-card chart-full">
+          <div class="chart-header">
+            <span class="chart-title">Budget vs Actual — Category Breakdown</span>
+            <span class="chart-sub">June 2026</span>
+          </div>
+          <canvas id="budgetChart" height="180"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── CATEGORIES ── -->
+    <section class="section" id="section-categories">
+      <div class="charts-row">
+        <div class="chart-card chart-full">
+          <div class="chart-header">
+            <span class="chart-title">Category Spend Heatmap</span>
+            <span class="chart-sub">Daily spend intensity — current month</span>
+          </div>
+          <div class="heatmap-container" id="heatmapContainer"></div>
+          <div class="heatmap-legend">
+            <span>Low</span>
+            <div class="heatmap-gradient"></div>
+            <span>High</span>
+          </div>
+        </div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card chart-full">
+          <div class="chart-header">
+            <span class="chart-title">Category Detail</span>
+          </div>
+          <div class="category-cards" id="categoryCards"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TRANSACTIONS ── -->
+    <section class="section" id="section-transactions">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <input type="text" class="search-input" id="txnSearch" placeholder="Search description, category…" />
+          <select class="filter-select" id="txnCategory">
+            <option value="all">All Categories</option>
+            <option value="Office Supplies">Office Supplies</option>
+            <option value="Repairs & Maintenance">Repairs & Maintenance</option>
+            <option value="Transport & Logistics">Transport & Logistics</option>
+            <option value="Other">Other</option>
+          </select>
+          <select class="filter-select" id="txnStatus">
+            <option value="all">All Status</option>
+            <option value="Approved">Approved</option>
+            <option value="Pending">Pending</option>
+            <option value="Flagged">Flagged</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="expense-table" id="expenseTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Vendor</th>
+                <th>Amount (₦)</th>
+                <th>Approved By</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="expenseTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span id="tableCount">Showing 0 entries</span>
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BUDGET ── -->
+    <section class="section" id="section-budget">
+      <div class="charts-row">
+        <div class="chart-card chart-full">
+          <div class="chart-header">
+            <span class="chart-title">Budget Utilisation — All Categories</span>
+            <span class="chart-sub">June 2026 · Sango-Ota Branch</span>
+          </div>
+          <div class="budget-bars" id="budgetBars"></div>
+        </div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card chart-large">
+          <div class="chart-header">
+            <span class="chart-title">Month-on-Month Budget Variance</span>
+          </div>
+          <canvas id="varianceChart" height="220"></canvas>
+        </div>
+        <div class="chart-card chart-small">
+          <div class="chart-header">
+            <span class="chart-title">Alerts & Flags</span>
+          </div>
+          <div class="alerts-list" id="alertsList"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
